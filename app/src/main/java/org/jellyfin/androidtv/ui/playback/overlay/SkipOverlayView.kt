@@ -125,10 +125,8 @@ class SkipOverlayView @JvmOverloads constructor(
 
 		// Auto hide
 		LaunchedEffect(skipUiEnabled, targetPosition) {
-			if (skipUiEnabled && targetPosition != null) {
-				delay(MediaSegmentRepository.AskToSkipDisplayDuration)
-				_targetPosition.value = null
-			}
+			delay(MediaSegmentRepository.AskToSkipDisplayDuration)
+			_targetPosition.value = null
 		}
 
 		SkipOverlayComposable(visible)
