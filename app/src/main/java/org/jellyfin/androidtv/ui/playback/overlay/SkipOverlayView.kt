@@ -37,17 +37,17 @@ fun SkipOverlayComposable(
 					.background(colorResource(R.color.popup_menu_background).copy(alpha = 0.6f))
 					.padding(10.dp),
 				horizontalArrangement = Arrangement.spacedBy(8.dp),
-				verticalAlignment = Alignment.CenterVertically
+				verticalAlignment = Alignment.CenterVertically,
 			) {
 				Image(
 					painter = painterResource(R.drawable.ic_control_select),
-					contentDescription = null
+					contentDescription = null,
 				)
 
 				Text(
 					text = stringResource(R.string.segment_action_skip),
 					color = colorResource(id = R.color.button_default_normal_text),
-					fontSize = 18.sp
+					fontSize = 18.sp,
 				)
 			}
 		}
