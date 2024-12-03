@@ -26,20 +26,15 @@ fun SkipOverlayComposable(
 	visible: Boolean
 ) {
 	Box(
+		contentAlignment = Alignment.BottomEnd,
 		modifier = Modifier
-			.fillMaxSize()
-			.padding(horizontal = 48.dp, vertical = 48.dp),
-		contentAlignment = Alignment.BottomEnd
+			.padding(48.dp, 48.dp)
 	) {
-		AnimatedVisibility(
-			visible = visible,
-			enter = fadeIn(),
-			exit = fadeOut()
-		) {
+		AnimatedVisibility(visible = visible, enter = fadeIn(), exit = fadeOut()) {
 			Row(
 				modifier = Modifier
-					.background(colorResource(R.color.popup_menu_background).copy(alpha = 0.6f))
 					.clip(RoundedCornerShape(6.dp))
+					.background(colorResource(R.color.popup_menu_background).copy(alpha = 0.6f))
 					.padding(10.dp),
 				horizontalArrangement = Arrangement.spacedBy(8.dp),
 				verticalAlignment = Alignment.CenterVertically
