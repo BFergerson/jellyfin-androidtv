@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.datetime.Duration
 import org.jellyfin.androidtv.R
 import androidx.compose.ui.platform.LocalContext
+import org.jellyfin.androidtv.ui.playback.segment.MediaSegmentRepository
 
 /**
  * A composable for the Skip Overlay.
@@ -65,50 +66,54 @@ fun SkipOverlayComposable(
 	}
 }
 
-/**
- * A View that wraps the SkipOverlay composable and manages its visibility state.
- */
 class SkipOverlayView @JvmOverloads constructor(
 	context: Context,
 	attrs: AttributeSet? = null
 ) : View(context, attrs) {
+	private val _currentPosition = MutableStateFlow(Duration.ZERO)
+	private val _targetPosition = MutableStateFlow<Duration?>(null)
+	private val _skipUiEnabled = MutableStateFlow(true)
 
-	private var visible: Boolean = true
+	var currentPosition: Duration
+		get() = _currentPosition.value
+		set(value) {
+			_currentPosition.value = value
+		}
 
-	init {
-		// Any initializations if necessary
-	}
+	var currentPositionMs: Long
+		get() = _currentPosition.value.inWholeMilliseconds
+		set(value) {
+			_currentPosition.value = value.milliseconds
+		}
 
-	/**
-	 * Set visibility for the skip overlay.
-	 * @param visible Boolean to control whether the skip overlay should be shown or hidden.
-	 */
-	fun setVisible(visible: Boolean) {
-		this.visible = visible
-		invalidate() // Trigger redraw when visibility changes
-	}
+	var targetPosition: Duration?
+		get() = _targetPosition.value
+		set(value) {
+			_targetPosition.value = value
+		}
 
-	override fun onAttachedToWindow() {
-		super.onAttachedToWindow()
-		// Setup or cleanup resources if needed
-	}
+	var targetPositionMs: Long?
+		get() = _targetPosition.value?.inWholeMilliseconds
+		set(value) {
+			_targetPosition.value = value?.milliseconds
+		}
 
-	override fun onDetachedFromWindow() {
-		super.onDetachedFromWindow()
-		// Cleanup resources
-	}
+	var skipUiEnabled: Boolean
+		get() = _skipUiEnabled.value
+		set(value) {
+			_skipUiEnabled.value = value
+		}
 
-	override fun onDraw(canvas: android.graphics.Canvas?) {
-		super.onDraw(canvas)
-		// If you need to call Compose UI within a traditional Android view, you can use AndroidView
-		// Here we render the composable with the current visibility state
-	}
+	val visible: Boolean
+		get() {
+			val enabled = _skipUiEnabled.value
+			val currentPosition = _currentPosition.value
+			val targetPosition = _targetPosition.value
+			return enabled && targetPosition != null && currentPosition <= (targetPosition - MediaSegmentRepository.SkipMinDuration)
+		}
 
-	/**
-	 * Bind composable to the view. This would be called if integrating into a traditional Android view.
-	 */
 	@Composable
-	fun renderSkipOverlayComposable() {
+	fun Content() {
 		SkipOverlayComposable(visible = visible)
 	}
 }
