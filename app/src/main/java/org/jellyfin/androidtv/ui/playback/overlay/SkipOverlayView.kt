@@ -21,37 +21,27 @@ import org.jellyfin.androidtv.R
 import androidx.compose.ui.platform.LocalContext
 import org.jellyfin.androidtv.ui.playback.segment.MediaSegmentRepository
 
-/**
- * A composable for the Skip Overlay.
- * @param visible Flag to control whether the overlay is visible or not.
- */
 @Composable
 fun SkipOverlayComposable(
 	visible: Boolean
 ) {
-	// Use AnimatedVisibility for smooth visibility transitions
-	AnimatedVisibility(
-		visible = visible,
-		enter = fadeIn(),
-		exit = fadeOut(),
+	Box(
 		modifier = Modifier
 			.fillMaxSize()
-			.padding(16.dp)
+			.padding(horizontal = 48.dp, vertical = 48.dp),
+		contentAlignment = Alignment.BottomEnd
 	) {
-		// Display the overlay in the bottom-right corner
-		Box(
-			modifier = Modifier
-				.fillMaxSize()
-				.padding(16.dp),
-			contentAlignment = Alignment.BottomEnd
+		AnimatedVisibility(
+			visible = visible,
+			enter = fadeIn(),
+			exit = fadeOut()
 		) {
-			// Skip Button with position details
 			Column(
 				horizontalAlignment = Alignment.CenterHorizontally,
 				verticalArrangement = Arrangement.Center
 			) {
 				Text(
-					text = stringResource(id = R.string.skip_to_position, "00:05"), // Example static text, replace with dynamic duration
+					text = stringResource(id = R.string.skip_to_position, "00:05"),
 					color = Color.White,
 					modifier = Modifier.padding(bottom = 8.dp)
 				)
