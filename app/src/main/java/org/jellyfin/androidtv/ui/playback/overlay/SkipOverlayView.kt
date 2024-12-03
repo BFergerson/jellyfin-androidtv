@@ -36,21 +36,25 @@ fun SkipOverlayComposable(
 			enter = fadeIn(),
 			exit = fadeOut()
 		) {
-			Column(
-				horizontalAlignment = Alignment.CenterHorizontally,
-				verticalArrangement = Arrangement.Center
+			Row(
+				modifier = Modifier
+					.background(
+						color = MaterialTheme.colors.popupMenuBackground.copy(alpha = 0.6f)
+					)
+					.padding(10.dp)
+					.verticalAlignment(Alignment.CenterVertically),
+				horizontalArrangement = Arrangement.spacedBy(8.dp),
+				verticalAlignment = Alignment.CenterVertically
 			) {
-				Text(
-					text = stringResource(id = R.string.skip_to_position, "00:05"),
-					color = Color.White,
-					modifier = Modifier.padding(bottom = 8.dp)
+				Image(
+					painter = painterResource(id = R.drawable.ic_control_select),
+					contentDescription = null
 				)
-				Button(
-					onClick = { /* Handle skip action */ },
-					modifier = Modifier.padding(8.dp)
-				) {
-					Text(text = stringResource(id = R.string.skip))
-				}
+				Text(
+					text = stringResource(id = R.string.segment_action_skip),
+					color = MaterialTheme.colors.buttonDefaultNormalText,
+					fontSize = 18.sp
+				)
 			}
 		}
 	}
