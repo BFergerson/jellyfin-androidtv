@@ -86,7 +86,7 @@ import kotlin.Lazy;
 import timber.log.Timber;
 
 public class CustomPlaybackOverlayFragment extends Fragment implements LiveTvGuide, View.OnKeyListener {
-    private VlcPlayerInterfaceBinding binding;
+    protected VlcPlayerInterfaceBinding binding;
     private OverlayTvGuideBinding tvGuideBinding;
 
     private RowsSupportFragment mPopupRowsFragment;
@@ -475,28 +475,19 @@ public class CustomPlaybackOverlayFragment extends Fragment implements LiveTvGui
                     leanbackOverlayFragment.hideOverlay();
                 }
 
-                // Handle Skip Overlay visibility
-                if (binding.skipOverlay.isVisible()) { // Check if the skip overlay is visible
+                if (binding.skipOverlay.isVisible()) {
+                    // Hide without doing anything
                     if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_ESCAPE) {
-                        // Hide the skip overlay without skipping
-                        binding.skipOverlay.setVisible(false);
-                        binding.skipOverlay.setTargetPositionMs(null); // Reset the target position
-                        return true;
-                    } else if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER || keyCode == KeyEvent.KEYCODE_ENTER) {
-                        // Perform Skip Operation Inline
-                        if (playbackControllerContainer != null && playbackControllerContainer.getValue() != null) {
-                            PlaybackController playbackController = playbackControllerContainer.getValue().getPlaybackController();
-                            if (playbackController != null && binding.skipOverlay.getTargetPositionMs() != null) {
-                                playbackController.seek(binding.skipOverlay.getTargetPositionMs());
-                            }
-                        }
-                        binding.skipOverlay.setVisible(false); // Hide the skip overlay after skipping
-                        binding.skipOverlay.setTargetPositionMs(null); // Reset the target position
-                        leanbackOverlayFragment.setShouldShowOverlay(true); // Show the overlay again
+                        binding.skipOverlay.setTargetPositionMs(null);
                         return true;
                     }
-
-                    // Block other key events while the skip overlay is visible
+                    // Hide with seek
+                    if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER || keyCode == KeyEvent.KEYCODE_ENTER) {
+                        playbackControllerContainer.getValue().getPlaybackController().seek(binding.skipOverlay.getTargetPositionMs());
+                        leanbackOverlayFragment.setShouldShowOverlay(false);
+                        binding.skipOverlay.setTargetPositionMs(null);
+                        return true;
+                    }
                     return true;
                 }
 
