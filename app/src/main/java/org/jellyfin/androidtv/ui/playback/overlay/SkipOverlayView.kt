@@ -115,6 +115,22 @@ class SkipOverlayView @JvmOverloads constructor(
 
 	@Composable
 	fun Content() {
-		SkipOverlayComposable(visible = visible)
+		val skipUiEnabled by _skipUiEnabled.collectAsState()
+		val currentPosition by _currentPosition.collectAsState()
+		val targetPosition by _targetPosition.collectAsState()
+
+		val visible by remember(skipUiEnabled, currentPosition, targetPosition) {
+			derivedStateOf { visible }
+		}
+
+		// Auto hide
+		LaunchedEffect(skipUiEnabled, targetPosition) {
+			if (skipUiEnabled && targetPosition != null) {
+				delay(MediaSegmentRepository.AskToSkipDisplayDuration)
+				_targetPosition.value = null
+			}
+		}
+
+		SkipOverlayComposable(visible)
 	}
 }
