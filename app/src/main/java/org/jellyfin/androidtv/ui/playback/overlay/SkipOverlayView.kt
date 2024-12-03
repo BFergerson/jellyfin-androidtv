@@ -27,10 +27,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.material3.Text
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.datetime.Duration
 import org.jellyfin.androidtv.R
 import org.jellyfin.androidtv.ui.playback.segment.MediaSegmentRepository
+import kotlinx.datetime.Duration
+import kotlinx.datetime.Duration.Companion.milliseconds
 
 @Composable
 fun SkipOverlayComposable(
