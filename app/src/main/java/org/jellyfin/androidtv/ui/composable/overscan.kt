@@ -6,9 +6,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 /**
- * Default overscan padding values of 48 horizontal and 27 vertical display pixels.
+ * Default overscan values of 48 horizontal and 27 vertical display pixels.
  */
-val overscanPaddingValues = PaddingValues(horizontal = 48.dp, vertical = 27.dp)
+val overscanPaddingValues = PaddingValues(48.dp, 27.dp)
 
 /**
  * Apply a [padding] with [overscanPaddingValues].
