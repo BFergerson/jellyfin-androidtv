@@ -13,7 +13,13 @@ enum class MediaSegmentAction(
 
 	/**
 	 * Seek to the end of this segment (endTicks). If the duration of this segment is shorter than 1 second it should do nothing to avoid
-	 * lagg. The skip action will only execute when playing over the segment start, not when seeking into the segment block.
+	 * lag. The skip action will only execute when playing over the segment start, not when seeking into the segment block.
 	 */
 	SKIP(R.string.segment_action_skip),
+
+	/**
+	 * Show a prompt to ask the user if they want to skip this segment.
+	 * This action only triggers if the segment duration is at least 3 seconds.
+	 */
+	ASK_TO_SKIP(R.string.segment_action_ask_to_skip),
 }
