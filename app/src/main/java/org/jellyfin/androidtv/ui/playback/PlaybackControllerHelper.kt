@@ -69,7 +69,6 @@ private fun PlaybackController.addSkipAction(mediaSegment: MediaSegmentDto) {
 		}
 		// Segments at position 0 will never be hit by ExoPlayer so we need to add a minimum value
 		.setPosition(mediaSegment.start.inWholeMilliseconds.coerceAtLeast(1))
-		.setPayload(mediaSegment)
 		.setDeleteAfterDelivery(false)
 		.send()
 }
@@ -82,7 +81,6 @@ private fun PlaybackController.addAskToSkipAction(mediaSegment: MediaSegmentDto)
 		}
 		// Segments at position 0 will never be hit by ExoPlayer so we need to add a minimum value
 		.setPosition(mediaSegment.start.inWholeMilliseconds.coerceAtLeast(1))
-		.setPayload(mediaSegment)
 		.setDeleteAfterDelivery(false)
 		.send()
 }

@@ -475,12 +475,13 @@ public class CustomPlaybackOverlayFragment extends Fragment implements LiveTvGui
                     leanbackOverlayFragment.hideOverlay();
                 }
 
-                if (binding.skipOverlay.isVisible()) {
+                if (binding.skipOverlay.getVisible()) {
                     // Hide without doing anything
-                    if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_ESCAPE) {
+                    if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_BUTTON_B || keyCode == KeyEvent.KEYCODE_ESCAPE) {
                         binding.skipOverlay.setTargetPositionMs(null);
                         return true;
                     }
+
                     // Hide with seek
                     if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER || keyCode == KeyEvent.KEYCODE_ENTER) {
                         playbackControllerContainer.getValue().getPlaybackController().seek(binding.skipOverlay.getTargetPositionMs());
@@ -488,7 +489,6 @@ public class CustomPlaybackOverlayFragment extends Fragment implements LiveTvGui
                         binding.skipOverlay.setTargetPositionMs(null);
                         return true;
                     }
-                    return true;
                 }
 
                 if (keyCode == KeyEvent.KEYCODE_MEDIA_STOP) {
@@ -804,10 +804,9 @@ public class CustomPlaybackOverlayFragment extends Fragment implements LiveTvGui
                 if (mDisplayProgramsTask != null) mDisplayProgramsTask.cancel(true);
                 mDisplayProgramsTask = new DisplayProgramsTask(self);
                 mDisplayProgramsTask.execute(mCurrentDisplayChannelStartNdx, mCurrentDisplayChannelEndNdx);
-
-                binding.skipOverlay.setSkipUiEnabled(!mIsVisible && !mGuideVisible && !mPopupPanelVisible);
             }
         });
+        binding.skipOverlay.setSkipUiEnabled(!mIsVisible && !mGuideVisible && !mPopupPanelVisible);
     }
 
     DisplayProgramsTask mDisplayProgramsTask;
