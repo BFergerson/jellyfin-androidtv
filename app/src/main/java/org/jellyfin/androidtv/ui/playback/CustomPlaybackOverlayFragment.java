@@ -489,7 +489,6 @@ public class CustomPlaybackOverlayFragment extends Fragment implements LiveTvGui
                         binding.skipOverlay.setTargetPositionMs(null);
                         return true;
                     }
-                    return true;
                 }
 
                 if (keyCode == KeyEvent.KEYCODE_MEDIA_STOP) {
@@ -807,7 +806,6 @@ public class CustomPlaybackOverlayFragment extends Fragment implements LiveTvGui
                 mDisplayProgramsTask.execute(mCurrentDisplayChannelStartNdx, mCurrentDisplayChannelEndNdx);
             }
         });
-
         binding.skipOverlay.setSkipUiEnabled(!mIsVisible && !mGuideVisible && !mPopupPanelVisible);
     }
 
