@@ -38,21 +38,20 @@ fun SkipOverlayComposable(
 		) {
 			Row(
 				modifier = Modifier
-					.background(
-						color = MaterialTheme.colors.popupMenuBackground.copy(alpha = 0.6f)
-					)
-					.padding(10.dp)
-					.verticalAlignment(Alignment.CenterVertically),
+					.background(colorResource(R.color.popup_menu_background).copy(alpha = 0.6f))
+					.clip(RoundedCornerShape(6.dp))
+					.padding(10.dp),
 				horizontalArrangement = Arrangement.spacedBy(8.dp),
 				verticalAlignment = Alignment.CenterVertically
 			) {
 				Image(
-					painter = painterResource(id = R.drawable.ic_control_select),
+					painter = painterResource(R.drawable.ic_control_select),
 					contentDescription = null
 				)
+
 				Text(
-					text = stringResource(id = R.string.segment_action_skip),
-					color = MaterialTheme.colors.buttonDefaultNormalText,
+					text = stringResource(R.string.segment_action_skip),
+					color = colorResource(id = R.color.button_default_normal_text),
 					fontSize = 18.sp
 				)
 			}
