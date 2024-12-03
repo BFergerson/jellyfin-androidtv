@@ -30,7 +30,7 @@ fun SkipOverlayComposable(
 		modifier = Modifier
 			.padding(48.dp, 48.dp)
 	) {
-		AnimatedVisibility(visible = visible, enter = fadeIn(), exit = fadeOut()) {
+		AnimatedVisibility(visible, enter = fadeIn(), exit = fadeOut()) {
 			Row(
 				modifier = Modifier
 					.clip(RoundedCornerShape(6.dp))
@@ -46,7 +46,7 @@ fun SkipOverlayComposable(
 
 				Text(
 					text = stringResource(R.string.segment_action_skip),
-					color = colorResource(id = R.color.button_default_normal_text),
+					color = colorResource(R.color.button_default_normal_text),
 					fontSize = 18.sp,
 				)
 			}
@@ -56,8 +56,9 @@ fun SkipOverlayComposable(
 
 class SkipOverlayView @JvmOverloads constructor(
 	context: Context,
-	attrs: AttributeSet? = null
-) : View(context, attrs) {
+	attrs: AttributeSet? = null,
+	defStyle: Int = 0
+) : View(context, attrs, defStyle) {
 	private val _currentPosition = MutableStateFlow(Duration.ZERO)
 	private val _targetPosition = MutableStateFlow<Duration?>(null)
 	private val _skipUiEnabled = MutableStateFlow(true)
@@ -102,7 +103,7 @@ class SkipOverlayView @JvmOverloads constructor(
 		}
 
 	@Composable
-	fun Content() {
+	override fun Content() {
 		val skipUiEnabled by _skipUiEnabled.collectAsState()
 		val currentPosition by _currentPosition.collectAsState()
 		val targetPosition by _targetPosition.collectAsState()
@@ -113,7 +114,7 @@ class SkipOverlayView @JvmOverloads constructor(
 
 		// Auto hide
 		LaunchedEffect(skipUiEnabled, targetPosition) {
-			delay(MediaSegmentRepository.AskToSkipDisplayDuration)
+			delay(MediaSegmentRepository.AskToSkipAutoHideDuration)
 			_targetPosition.value = null
 		}
 

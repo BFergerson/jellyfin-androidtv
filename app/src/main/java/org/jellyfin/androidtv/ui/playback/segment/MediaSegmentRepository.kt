@@ -34,9 +34,9 @@ interface MediaSegmentRepository {
 		val AskToSkipMinDuration = 3.seconds
 
 		/**
-		 * The duration for which the "Ask to skip" prompt is displayed.
+		 * The duration to wait before automatically hiding the "ask to skip" UI.
 		 */
-		val AskToSkipDisplayDuration = 8.seconds
+		val AskToSkipAutoHideDuration = 8.seconds
 	}
 
 	fun getDefaultSegmentTypeAction(type: MediaSegmentType): MediaSegmentAction
@@ -95,7 +95,7 @@ class MediaSegmentRepositoryImpl(
 		val action = getDefaultSegmentTypeAction(segment.type)
 		// Skip the skip action if timespan is too short
 		if (action == MediaSegmentAction.SKIP && segment.duration < MediaSegmentRepository.SkipMinDuration) return MediaSegmentAction.NOTHING
-		// Skip the ask-to-skip action if timespan is too short
+		// Skip the ask to skip action if timespan is too short
 		if (action == MediaSegmentAction.ASK_TO_SKIP && segment.duration < MediaSegmentRepository.AskToSkipMinDuration) return MediaSegmentAction.NOTHING
 		return action
 	}
