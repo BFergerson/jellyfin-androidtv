@@ -27,17 +27,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.material3.Text
+import androidx.tv.material3.Text
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.jellyfin.androidtv.R
 import org.jellyfin.androidtv.ui.playback.segment.MediaSegmentRepository
-import kotlinx.datetime.Duration
-import kotlinx.datetime.Duration.Companion.milliseconds
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun SkipOverlayComposable(
-	visible: Boolean
+	visible: Boolean,
 ) {
 	Box(
 		contentAlignment = Alignment.BottomEnd,
@@ -72,7 +72,7 @@ class SkipOverlayView @JvmOverloads constructor(
 	context: Context,
 	attrs: AttributeSet? = null,
 	defStyle: Int = 0
-) : View(context, attrs, defStyle) {
+) : AbstractComposeView(context, attrs, defStyle) {
 	private val _currentPosition = MutableStateFlow(Duration.ZERO)
 	private val _targetPosition = MutableStateFlow<Duration?>(null)
 	private val _skipUiEnabled = MutableStateFlow(true)
